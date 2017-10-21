@@ -1,58 +1,52 @@
-//
-// Created by AK on 13/10/15.
-//
 
 #include "gtest/gtest.h"
+#include <garbage/PlasticGarbage.hpp>
+#include <garbage/PaperGarbage.hpp>
+#include <garbage/MetalGarbage.hpp>
+#include <garbage/BottleCap.hpp>
 
-#include "GregorianCalendar.h"
-#include "JulianCalendar.h"
+class GarbageFixture : public ::testing::Test {
 
-#define TEST_DAY_GR 14
-#define TEST_MONTH_GR 4
-#define TEST_YEAR_GR 2015
-#define TEST_ABSOLUTE 735702
-
-class CalendarFixture : public ::testing::Test {
 protected:
-    virtual void TearDown() {
-    }
-
-    virtual void SetUp() {
-    }
+    virtual void TearDown() {}
+    virtual void SetUp() {}
 
 public:
-    CalendarFixture() : Test() {
-        gregorian_calendar = new GregorianCalendar(TEST_MONTH_GR, TEST_DAY_GR, TEST_YEAR_GR);
-    }
-
-    virtual ~CalendarFixture() {
-        delete gregorian_calendar;
-    }
-
-    GregorianCalendar * gregorian_calendar;
+    GarbageFixture() : Test() {}
 };
-TEST_F(CalendarFixture, absolute_date_check) {
-    int absolute = *gregorian_calendar;
-    EXPECT_EQ(absolute, TEST_ABSOLUTE);
+
+TEST_F(GarbageFixture, PlasticGarbage_check) {
+    PlasticGarbage plastic = PlasticGarbage("plastic");
+    EXPECT_EQ(plastic.getName(), "plastic");
+    EXPECT_EQ(plastic.cleanState(), false);
+    EXPECT_NO_THROW(plastic.clean());
+    EXPECT_EQ(plastic.cleanState(), true);
 }
 
-TEST_F(CalendarFixture, plus_one_date_check) {
-    int absolute = (*gregorian_calendar) + 1;
-    EXPECT_EQ(absolute, TEST_ABSOLUTE + 1);
+TEST_F(GarbageFixture, PaperGarbage_check) {
+    PaperGarbage paper = PaperGarbage("paper");
+    EXPECT_EQ(paper.getName(), "paper");
+    EXPECT_EQ(paper.squeezeState(), false);
+    EXPECT_NO_THROW(paper.squeeze());
+    EXPECT_EQ(paper.squeezeState(), true);
 }
 
-TEST_F(CalendarFixture, julian_date_check) {
-    int absolute = *gregorian_calendar;
-    JulianCalendar julian_calendar(absolute);
-
-    int julian_absolute = julian_calendar;
-    EXPECT_EQ(julian_absolute, TEST_ABSOLUTE);
+TEST_F(GarbageFixture, MetalGarbage_check) {
+    MetalGarbage metal = MetalGarbage("metal");
+    EXPECT_EQ(metal.getName(), "metal");
 }
 
-TEST_F(CalendarFixture, julian_plus_one_date_check) {
-    int absolute = *gregorian_calendar;
-    JulianCalendar julian_calendar(absolute);
+TEST_F(GarbageFixture, Garbage_check) {
+    Garbage waste = Garbage("other");
+    EXPECT_EQ(waste.getName(), "other");
+}
 
-    int julian_absolute = julian_calendar + 2;
-    EXPECT_EQ(julian_absolute, TEST_ABSOLUTE + 1);
+
+TEST_F(GarbageFixture, BottleCap_check) {
+    BottleCap pbc = BottleCap("pink");
+    BottleCap bbc = BottleCap("blue");
+    EXPECT_EQ(pbc.getName(), "bottlecap");
+    EXPECT_EQ(pbc.getName(), "bottlecap");
+    EXPECT_EQ(pbc.getColor(), "pink");
+    EXPECT_EQ(bbc.getColor(), "blue");
 }

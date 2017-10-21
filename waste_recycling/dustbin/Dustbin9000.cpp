@@ -5,7 +5,8 @@
 #include <iostream>
 #include "Dustbin9000.h"
 
-Dustbin9000::Dustbin9000(std::string color) {}
+Dustbin9000::Dustbin9000(std::string color)
+    : Dustbin(color) {}
 
 Dustbin9000::Dustbin9000() {}
 
