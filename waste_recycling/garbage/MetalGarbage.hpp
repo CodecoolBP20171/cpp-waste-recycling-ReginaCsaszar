@@ -5,8 +5,6 @@
 #ifndef WASTE_METALGARBAGE_HPP
 #define WASTE_METALGARBAGE_HPP
 
-
-#include <iostream>
 #include "Garbage.hpp"
 
 class MetalGarbage : public Garbage {
@@ -15,9 +13,7 @@ public:
     MetalGarbage(std::string name)
         : Garbage(name) {}
 
-    ~MetalGarbage() {
-        std::cout << "You destroyed a MetalGarbage." << std::endl;
-    }
+    ~MetalGarbage() {}
 };
 
 #endif //WASTE_METALGARBAGE_HPP

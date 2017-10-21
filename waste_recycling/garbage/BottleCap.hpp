@@ -16,9 +16,7 @@ public:
     explicit BottleCap()
         : Garbage("bottlecap"), color("pink") {}
 
-    ~BottleCap() {
-        std::cout << "You destroyed a BottleCap." << std::endl;
-    }
+    ~BottleCap() {}
 
     const std::string &getColor() const {
         return color;

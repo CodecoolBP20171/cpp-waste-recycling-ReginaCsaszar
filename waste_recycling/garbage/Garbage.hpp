@@ -6,16 +6,13 @@
 
 #include <string>
 
-
 class Garbage {
 
 public:
     explicit Garbage(std::string name)
         : name(name){}
 
-    ~Garbage() {
-        std::cout << "You destroyed a Garbage." << std::endl;
-    }
+    virtual ~Garbage() {}
 
     const std::string& getName() const {
         return name;

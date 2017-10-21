@@ -13,9 +13,7 @@ public:
     explicit PlasticGarbage(std::string name)
         : Garbage(name), isClean(false) {}
 
-    ~PlasticGarbage() {
-        std::cout << "You destroyed a PlasticGarbage." << std::endl;
-    }
+    ~PlasticGarbage() {}
 
     bool cleanState() const {
         return isClean;
@@ -23,7 +21,6 @@ public:
 
     void clean() {
         isClean = true;
-        std::cout << "You washed a PlasticGarbage." << std::endl;
     }
 
 private:

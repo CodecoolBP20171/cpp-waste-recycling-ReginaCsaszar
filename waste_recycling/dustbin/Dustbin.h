@@ -40,8 +40,6 @@ private:
     std::vector<PaperGarbage> paperContent;
     std::vector<PlasticGarbage> plasticContent;
     std::vector<Garbage> houseWasteContent;
-
 };
-
 
 #endif //WASTE_DUSTBIN_H
