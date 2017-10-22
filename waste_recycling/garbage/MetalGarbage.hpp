@@ -11,7 +11,7 @@ class MetalGarbage : public Garbage {
 
 public:
     MetalGarbage(std::string name)
-        : Garbage(name) {}
+        : Garbage(name, 25) {}
 
     ~MetalGarbage() {}
 };

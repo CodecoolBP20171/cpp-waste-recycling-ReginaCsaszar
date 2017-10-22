@@ -11,7 +11,7 @@ class PaperGarbage : public Garbage {
 
 public:
     explicit PaperGarbage(std::string name)
-        : Garbage(name), isSqueezed(false) {}
+        : Garbage(name, 5), isSqueezed(false) {}
 
     ~PaperGarbage() {}
 

@@ -2,6 +2,7 @@
 // Created by jeannie on 2017.10.20..
 //
 
+
 #ifndef WASTE_DUSTBIN_H
 #define WASTE_DUSTBIN_H
 
@@ -13,6 +14,7 @@
 #include "../garbage/PlasticGarbage.hpp"
 
 #include "DustbinContentError.hpp"
+#include "DustbinIsFullException.hpp"
 
 class Dustbin {
 
@@ -30,11 +32,17 @@ public:
     unsigned long getPaperGarbageAmount() const;
     unsigned long getPlasticGarbageAmount() const;
     unsigned long getHouseWasteAmount() const;
+    unsigned int getCurrentWeight() const;
 
     virtual ~Dustbin();
 
 protected:
     const std::string color;
+    const unsigned capacity;
+    unsigned currentWeight;
+
+    bool isOverflow(unsigned);
+    void addWeight(unsigned);
 
 private:
     std::vector<PaperGarbage> paperContent;

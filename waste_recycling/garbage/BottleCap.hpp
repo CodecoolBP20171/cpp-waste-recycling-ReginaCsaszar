@@ -11,10 +11,10 @@ class BottleCap : public Garbage {
 
 public:
     explicit BottleCap(std::string col)
-        : Garbage("bottlecap"), color(col) {}
+        : Garbage("bottlecap", 1), color(col) {}
 
     explicit BottleCap()
-        : Garbage("bottlecap"), color("pink") {}
+        : Garbage("bottlecap", 1), color("pink") {}
 
     ~BottleCap() {}
 

@@ -9,16 +9,17 @@ Dustbin9000::Dustbin9000(std::string color)
 
 Dustbin9000::Dustbin9000() {}
 
-void Dustbin9000::throwOutMetalGarbage(Garbage item) {
-    metalContent.push_back(item);
+void Dustbin9000::throwOutMetalGarbage(Garbage waste) {
+    if (isOverflow(waste.getWeight())) throw DustbinIsFull();
+    metalContent.push_back(waste);
+    addWeight(waste.getWeight());
 }
 
 void Dustbin9000::throwOutBottlecap(BottleCap cap) {
-    if (cap.getColor()=="pink") {
-        pinkBottleCaps.push_back(cap);
-    } else {
-        throw BottleCapException();
-    }
+    if (isOverflow(cap.getWeight())) throw DustbinIsFull();
+    if (cap.getColor()!="pink") throw BottleCapException();
+    pinkBottleCaps.push_back(cap);
+    addWeight(cap.getWeight());
 }
 
 void Dustbin9000::emptyContents() {

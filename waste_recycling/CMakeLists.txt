@@ -10,7 +10,7 @@ set(HEADER_FILES
         garbage/MetalGarbage.hpp
         garbage/PaperGarbage.hpp
         garbage/PlasticGarbage.hpp
-        )
+        dustbin/DustbinIsFullException.hpp)
 
 set(SOURCE_FILES
         dustbin/Dustbin.cpp

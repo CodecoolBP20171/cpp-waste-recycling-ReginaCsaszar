@@ -11,7 +11,7 @@ class PlasticGarbage : public Garbage {
 
 public:
     explicit PlasticGarbage(std::string name)
-        : Garbage(name), isClean(false) {}
+        : Garbage(name, 10), isClean(false) {}
 
     ~PlasticGarbage() {}
 
