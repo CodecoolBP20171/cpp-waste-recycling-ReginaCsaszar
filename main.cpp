@@ -1,6 +1,7 @@
 #include <iostream>
 
 int main() {
-    std::cout << "This is the waste recycling suite.\nSorry you can't do anything here yet." << std::endl;
+    std::cout << "\nWelcome!\nThis is the waste recycling suite.\n"
+            "Sadly you can't do anything here, but try out my tests!\n";
     return 0;
 }
