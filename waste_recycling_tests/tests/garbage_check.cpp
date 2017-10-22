@@ -43,7 +43,7 @@ TEST_F(GarbageFixture, Garbage_check) {
 
 
 TEST_F(GarbageFixture, BottleCap_check) {
-    BottleCap pbc = BottleCap("pink");
+    BottleCap pbc = BottleCap();
     BottleCap bbc = BottleCap("blue");
     EXPECT_EQ(pbc.getName(), "bottlecap");
     EXPECT_EQ(pbc.getName(), "bottlecap");

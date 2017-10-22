@@ -26,7 +26,6 @@ TEST_F(RecycleFixture, Dustbin_container_check) {
     EXPECT_EQ(bin.getHouseWasteAmount(), 5);
     EXPECT_NO_THROW(bin.emptyContents());
     EXPECT_EQ(bin.getHouseWasteAmount(), 0);
-
 }
 
 TEST_F(RecycleFixture, Dustbin9000_container_check) {
@@ -41,8 +40,7 @@ TEST_F(RecycleFixture, Dustbin9000_container_check) {
     EXPECT_NO_THROW(bin.throwOutMetalGarbage(metal));
     EXPECT_NO_THROW(bin.throwOutMetalGarbage(metal));
     EXPECT_NO_THROW(bin.throwOutMetalGarbage(metal));
-    EXPECT_NO_THROW(bin.throwOutMetalGarbage(metal));
-    EXPECT_EQ(bin.getMetalGarbageAmount(), 5);
+    EXPECT_EQ(bin.getMetalGarbageAmount(), 4);
     EXPECT_NO_THROW(bin.emptyContents());
     EXPECT_EQ(bin.getMetalGarbageAmount(), 0);
 }
