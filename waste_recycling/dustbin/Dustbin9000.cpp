@@ -5,9 +5,13 @@
 #include "Dustbin9000.h"
 
 Dustbin9000::Dustbin9000(std::string color)
-    : Dustbin(color) {}
+    : Dustbin(color) {
+    type ="Dustbin9000";
+}
 
-Dustbin9000::Dustbin9000() {}
+Dustbin9000::Dustbin9000() {
+    type ="Dustbin9000";
+}
 
 void Dustbin9000::throwOutMetalGarbage(Garbage waste) {
     if (isOverflow(waste.getWeight())) throw DustbinIsFull();

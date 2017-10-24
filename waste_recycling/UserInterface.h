@@ -12,32 +12,26 @@ class UserInterface {
 
 public:
     UserInterface();
-    virtual ~UserInterface();
+    ~UserInterface();
 
     void process();
 
 private:
+
+    std::unique_ptr<Dustbin> bin;
 
     int selectedMenu;
     std::string givenString;
 
     void showCarret();
     void showBinOptions();
-    void selectColorOrName(std::string type);
     void showGarbageOptions();
-    void show9kGarbageOptions();
-    void informAboutThrowOut();
-    void informAboutFullBin();
+    void readInputString(std::string type);
+    void readInputInt();
 
-    void handlePlastic();
-    void handlePaper();
-    void handleGarbage();
+    void dustbinMenu();
+    void garbageMenu();
 
-    void dustbinMenu(Dustbin&);
-    void dustbin9kMenu(Dustbin9000&);
-
-    void garbageMenu(Dustbin&);
-    void garbage9kMenu(Dustbin9000&);
 };
 
 

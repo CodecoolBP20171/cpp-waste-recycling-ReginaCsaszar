@@ -29,6 +29,7 @@ public:
     virtual void emptyContents();
 
     const std::string &getColor() const;
+    const std::string &getType() const;
     unsigned long getPaperGarbageAmount() const;
     unsigned long getPlasticGarbageAmount() const;
     unsigned long getHouseWasteAmount() const;
@@ -38,6 +39,7 @@ public:
 
 protected:
     const std::string color;
+    std::string type;
     const unsigned capacity;
     unsigned currentWeight;
 

@@ -5,10 +5,10 @@
 #include "Dustbin.h"
 
 Dustbin::Dustbin()
-        : color("gray"), capacity(100), currentWeight(0) {}
+        : color("gray"), capacity(100), currentWeight(0), type("Dustbin") {}
 
 Dustbin::Dustbin(std::string color)
-        : color(color), capacity(100), currentWeight(0) {}
+        : color(color), capacity(100), currentWeight(0), type("Dustbin") {}
 
 Dustbin::~Dustbin() {}
 
@@ -65,6 +65,10 @@ bool Dustbin::isOverflow(unsigned garbageWeight) {
 
 void Dustbin::addWeight(unsigned garbageWeight) {
     currentWeight += garbageWeight;
+}
+
+const std::string &Dustbin::getType() const {
+    return type;
 }
 
 

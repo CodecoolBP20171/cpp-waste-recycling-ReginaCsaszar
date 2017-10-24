@@ -13,19 +13,18 @@ void UserInterface::process() {
     bool again = true;
     do {
         std::cout << "\nPlease select a bin:\n\n1 Dustbin\n2 Dustbin9000\n0 Leave";
-        showCarret();
-        std::cin >> selectedMenu;
+        readInputInt();
         switch (selectedMenu) {
             case 1 : {
-                selectColorOrName("color");
-                Dustbin bin = Dustbin(givenString);
-                dustbinMenu(bin);
+                readInputString("color");
+                bin.reset (new Dustbin(givenString));
+                dustbinMenu();
                 break;
             }
             case 2 : {
-                selectColorOrName("color");
-                Dustbin9000 bin9k = Dustbin9000(givenString);
-                dustbin9kMenu(bin9k);
+                readInputString("color");
+                bin.reset (new Dustbin9000(givenString));
+                dustbinMenu();
                 break;
             }
             case 0 : {
@@ -38,66 +37,42 @@ void UserInterface::process() {
 inline void UserInterface::showCarret() {
     std::cout << "\n\n>>";
 }
+inline void UserInterface::readInputString(std::string type) {
+    std::cout << "\nPlease specify a " << type << ":";
+    showCarret();
+    std::cin >> givenString;
+}
+inline void UserInterface::readInputInt() {
+    showCarret();
+    std::cin >> selectedMenu;
+}
 inline void UserInterface::showBinOptions() {
     std::cout <<"\nWhat do you want to do?\n\n"
             "1 Throw out some garbage\n"
             "2 Empty bin\n"
             "0 Leave";
 }
-inline void UserInterface::selectColorOrName(std::string type) {
-    std::cout << "\nPlease specify a " << type << ":";
-    showCarret();
-    std::cin >> givenString;
-}
-inline void UserInterface::informAboutFullBin() {
-    std::cout << "\nDustbin is full.";
-}
-inline void UserInterface::informAboutThrowOut() {
-    std::cout << "\nGarbage throwed out.";
-}
-
-void UserInterface::handleGarbage(){
-    std::cout << "\nWhat do you do with your garbage?\n\n1 Throw out\n0 Leave";
-    showCarret();
-    std::cin >> selectedMenu;
-}
-void UserInterface::handlePaper() {
-    std::cout << "\nWhat do you do with your paper?\n\n1 Throw out\n2 Squeeze\n0 Leave";
-    showCarret();
-    std::cin >> selectedMenu;
-}
-void UserInterface::handlePlastic() {
-    std::cout << "\nWhat do you do with your plastic?\n\n1 Throw out\n2 Wash out\n0 Leave";
-    showCarret();
-    std::cin >> selectedMenu;
-}
-
 inline void UserInterface::showGarbageOptions() {
-    std::cout <<"\nPlease select a garbage:\n\n1 Housewaste\n2 Plastic\n3 Paper\n0 Leave";
-}
-inline void UserInterface::show9kGarbageOptions() {
-    std::cout <<"\nPlease select a garbage:\n\n"
-            "1 Housewaste\n"
-            "2 Plastic\n"
-            "3 Paper\n"
-            "4 Metal\n"
-            "5 Bottle cup\n"
-            "0 Leave";
+    std::cout <<"\nPlease select a garbage:\n\n1 Housewaste\n2 Plastic\n3 Paper";
+    if (bin->getType() == "Dustbin9000") {
+        std::cout <<"\n4 Metal\n5 Bottle cup";
+    }
+    std::cout << "\n0 Leave";
 }
 
-void UserInterface::dustbinMenu(Dustbin& bin) {
+void UserInterface::dustbinMenu() {
     bool again = true;
+
     do {
         showBinOptions();
-        showCarret();
-        std::cin >> selectedMenu;
+        readInputInt();
         switch (selectedMenu) {
             case 1 : {
-                garbageMenu(bin);
+                garbageMenu();
                 break;
             }
             case 2 : {
-                bin.emptyContents();
+                bin->emptyContents();
                 std::cout <<"\nDustbin emptied.\n";
                 break;
             }
@@ -108,66 +83,44 @@ void UserInterface::dustbinMenu(Dustbin& bin) {
     } while(again);
 }
 
-void UserInterface::dustbin9kMenu(Dustbin9000& bin){
+void UserInterface::garbageMenu(){
     bool again = true;
     do {
-        showBinOptions();
-        showCarret();
-        std::cin >> selectedMenu;
-        switch (selectedMenu) {
-            case 1 : {
-                garbage9kMenu(bin);
-                break;
-            }
-            case 2 : {
-                bin.emptyContents();
-                std::cout <<"\nDustbin emptied.\n";
-                break;
-            }
-            case 0 : {
-                again = false;
-            }
-        }
-    } while(again);
-}
-
-void UserInterface::garbage9kMenu(Dustbin9000& bin){
-    bool again = true;
-    do {
-        show9kGarbageOptions();
-        showCarret();
-        std::cin >> selectedMenu;
+        showGarbageOptions();
+        readInputInt();
 
         switch (selectedMenu) {
             case 1 : {
-                selectColorOrName("name");
+                readInputString("name");
                 Garbage waste = Garbage(givenString);
                 do {
-                    handleGarbage();
+                    std::cout << "\nWhat do you do with your garbage?\n\n1 Throw out\n0 Leave";
+                    readInputInt();
                     if (selectedMenu == 1) {
                         try {
-                            bin.throwOutGarbage(waste);
-                            informAboutThrowOut();
+                            bin->throwOutGarbage(waste);
+                            std::cout << "\nGarbage throwed out.";
                         } catch (DustbinIsFull&) {
-                            informAboutFullBin();
+                            std::cout << "\nDustbin is full.";
                         }
                     }
                 } while (selectedMenu != 0);
                 break;
             }
             case 2 : {
-                selectColorOrName("name");
+                readInputString("name");
                 PlasticGarbage waste = PlasticGarbage(givenString);
                 do {
-                    handlePlastic();
+                    std::cout << "\nWhat do you do with your plastic?\n\n1 Throw out\n2 Wash out\n0 Leave";
+                    readInputInt();
                     if (selectedMenu == 1) {
                         try {
-                            bin.throwOutGarbage(waste);
-                            informAboutThrowOut();
+                            bin->throwOutPlasticGarbage(waste);
+                            std::cout << "\nGarbage throwed out.";
                         } catch (DustbinContentError&) {
                             std::cout << "\nYou can throw out only clean plastic garbage!";
                         } catch (DustbinIsFull&) {
-                            informAboutFullBin();
+                            std::cout << "\nDustbin is full.";
                         }
                     } else if (selectedMenu == 2) {
                         if (waste.cleanState()) {
@@ -183,18 +136,19 @@ void UserInterface::garbage9kMenu(Dustbin9000& bin){
                 break;
             }
             case 3 : {
-                selectColorOrName("name");
+                readInputString("name");
                 PaperGarbage waste = PaperGarbage(givenString);
                 do {
-                    handlePaper();
+                    std::cout << "\nWhat do you do with your paper?\n\n1 Throw out\n2 Squeeze\n0 Leave";
+                    readInputInt();
                     if (selectedMenu == 1) {
                         try {
-                            bin.throwOutGarbage(waste);
-                            informAboutThrowOut();
+                            bin->throwOutPaperGarbage(waste);
+                            std::cout << "\nGarbage throwed out.";
                         } catch (DustbinContentError&) {
                             std::cout << "\nYou can throw out only squeezed paper!";
                         } catch (DustbinIsFull&) {
-                            informAboutFullBin();
+                            std::cout << "\nDustbin is full.";
                         }
                     } else if (selectedMenu == 2) {
                         if (waste.squeezeState()) {
@@ -210,122 +164,43 @@ void UserInterface::garbage9kMenu(Dustbin9000& bin){
                 break;
             }
             case 4 : {
-                selectColorOrName("name");
-                MetalGarbage waste = MetalGarbage(givenString);
-                do {
-                    handleGarbage();
-                    if (selectedMenu == 1) {
-                        try {
-                            bin.throwOutGarbage(waste);
-                            informAboutThrowOut();
-                        } catch (DustbinIsFull&) {
-                            informAboutFullBin();
+                if  (bin->getType() == "Dustbin9000") {
+                    readInputString("name");
+                    MetalGarbage waste = MetalGarbage(givenString);
+                    do {
+                        std::cout << "\nWhat do you do with your garbage?\n\n1 Throw out\n0 Leave";
+                        readInputInt();
+                        if (selectedMenu == 1) {
+                            try {
+                                static_cast<Dustbin9000*>(bin.get())->throwOutMetalGarbage(waste);
+                                std::cout << "\nGarbage throwed out.";
+                            } catch (DustbinIsFull&) {
+                                std::cout << "\nDustbin is full.";
+                            }
                         }
-                    }
-                } while (selectedMenu != 0);
+                    } while (selectedMenu != 0);
+                }
                 break;
             }
             case 5 : {
-                selectColorOrName("color");
-                BottleCap waste = BottleCap(givenString);
-                do {
-                    handleGarbage();
-                    if (selectedMenu == 1) {
-                        try {
-                            bin.throwOutGarbage(waste);
-                            informAboutThrowOut();
-                        } catch (BottleCapException&) {
-                            std::cout << "\nYou can throw out only pink bottlecup!";
-                        } catch (DustbinIsFull&) {
-                            informAboutFullBin();
+                if  (bin->getType() == "Dustbin9000") {
+                    readInputString("color");
+                    BottleCap waste = BottleCap(givenString);
+                    do {
+                        std::cout << "\nWhat do you do with your garbage?\n\n1 Throw out\n0 Leave";
+                        readInputInt();
+                        if (selectedMenu == 1) {
+                            try {
+                                static_cast<Dustbin9000*>(bin.get())->throwOutBottlecap(waste);
+                                std::cout << "\nGarbage throwed out.";
+                            } catch (BottleCapException &) {
+                                std::cout << "\nYou can throw out only pink bottlecup!";
+                            } catch (DustbinIsFull &) {
+                                std::cout << "\nDustbin is full.";
+                            }
                         }
-                    }
-                } while (selectedMenu != 0);
-                break;
-            }
-            case 0 : {
-                again = false;
-            }
-        }
-    } while (again);
-}
-
-void UserInterface::garbageMenu(Dustbin& bin){
-    bool again = true;
-    do {
-        showGarbageOptions();
-        showCarret();
-        std::cin >> selectedMenu;
-
-        switch (selectedMenu) {
-            case 1 : {
-                selectColorOrName("name");
-                Garbage waste = Garbage(givenString);
-                do {
-                    handleGarbage();
-                    if (selectedMenu == 1) {
-                        try {
-                            bin.throwOutGarbage(waste);
-                            informAboutThrowOut();
-                        } catch (DustbinIsFull) {
-                            informAboutFullBin();
-                        }
-                    }
-                } while (selectedMenu != 0);
-                break;
-            }
-            case 2 : {
-                selectColorOrName("name");
-                PlasticGarbage waste = PlasticGarbage(givenString);
-                do {
-                    handlePlastic();
-                    if (selectedMenu == 1) {
-                        try {
-                            bin.throwOutGarbage(waste);
-                            informAboutThrowOut();
-                        } catch (DustbinContentError) {
-                            std::cout << "\nYou can throw out only clean plastic garbage!";
-                        } catch (DustbinIsFull) {
-                            informAboutFullBin();
-                        }
-                    } else if (selectedMenu == 2) {
-                        if (waste.cleanState()) {
-                            std::cout << waste.getName()
-                                      << " is clean.";
-                        } else {
-                            waste.clean();
-                            std::cout << waste.getName()
-                                      << " cleaned.";
-                        }
-                    }
-                } while (selectedMenu != 0);
-                break;
-            }
-            case 3 : {
-                selectColorOrName("name");
-                PaperGarbage waste = PaperGarbage(givenString);
-                do {
-                    handlePaper();
-                    if (selectedMenu == 1) {
-                        try {
-                            bin.throwOutGarbage(waste);
-                            informAboutThrowOut();
-                        } catch (DustbinContentError) {
-                            std::cout << "\nYou can throw out only squeezed paper!";
-                        } catch (DustbinIsFull) {
-                            informAboutFullBin();
-                        }
-                    } else if (selectedMenu == 2) {
-                        if (waste.squeezeState()) {
-                            std::cout << waste.getName()
-                                      << " already squeezed.";
-                        } else {
-                            waste.squeeze();
-                            std::cout << waste.getName()
-                                      << " squeezed.";
-                        }
-                    }
-                } while (selectedMenu != 0);
+                    } while (selectedMenu != 0);
+                }
                 break;
             }
             case 0 : {

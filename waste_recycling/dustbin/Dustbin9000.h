@@ -17,12 +17,12 @@ public:
     explicit Dustbin9000(std::string);
     Dustbin9000();
 
-    ~Dustbin9000() override ;
+    virtual ~Dustbin9000();
 
     void throwOutMetalGarbage(Garbage);
     void throwOutBottlecap(BottleCap);
 
-    void emptyContents() override ;
+    void emptyContents() override;
 
     unsigned long getMetalGarbageAmount() const;
     unsigned long getBottlecapAmount() const;
