@@ -2,6 +2,7 @@
 // Created by jeannie on 2017.10.22..
 //
 
+
 #include <iostream>
 #include "UserInterface.h"
 
@@ -83,7 +84,7 @@ void UserInterface::dustbinMenu() {
     } while(again);
 }
 
-void UserInterface::garbageMenu(){
+void UserInterface::garbageMenu(){ // TODO split&refactor
     bool again = true;
     do {
         showGarbageOptions();
@@ -100,6 +101,7 @@ void UserInterface::garbageMenu(){
                         try {
                             bin->throwOutGarbage(waste);
                             std::cout << "\nGarbage throwed out.";
+                            selectedMenu = 0;
                         } catch (DustbinIsFull&) {
                             std::cout << "\nDustbin is full.";
                         }
@@ -117,6 +119,7 @@ void UserInterface::garbageMenu(){
                         try {
                             bin->throwOutPlasticGarbage(waste);
                             std::cout << "\nGarbage throwed out.";
+                            selectedMenu = 0;
                         } catch (DustbinContentError&) {
                             std::cout << "\nYou can throw out only clean plastic garbage!";
                         } catch (DustbinIsFull&) {
@@ -145,6 +148,7 @@ void UserInterface::garbageMenu(){
                         try {
                             bin->throwOutPaperGarbage(waste);
                             std::cout << "\nGarbage throwed out.";
+                            selectedMenu = 0;
                         } catch (DustbinContentError&) {
                             std::cout << "\nYou can throw out only squeezed paper!";
                         } catch (DustbinIsFull&) {
@@ -174,6 +178,7 @@ void UserInterface::garbageMenu(){
                             try {
                                 static_cast<Dustbin9000*>(bin.get())->throwOutMetalGarbage(waste);
                                 std::cout << "\nGarbage throwed out.";
+                                selectedMenu = 0;
                             } catch (DustbinIsFull&) {
                                 std::cout << "\nDustbin is full.";
                             }
@@ -193,6 +198,7 @@ void UserInterface::garbageMenu(){
                             try {
                                 static_cast<Dustbin9000*>(bin.get())->throwOutBottlecap(waste);
                                 std::cout << "\nGarbage throwed out.";
+                                selectedMenu = 0;
                             } catch (BottleCapException &) {
                                 std::cout << "\nYou can throw out only pink bottlecup!";
                             } catch (DustbinIsFull &) {
